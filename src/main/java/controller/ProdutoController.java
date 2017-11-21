@@ -6,8 +6,10 @@
 package controller;
 
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.ProdutoModel;
 import model.entidades.Produto;
 
@@ -30,19 +32,27 @@ public class ProdutoController {
     }
 
     public void inserirAction() {
-	model.inserir(produto);
+	if (model.inserir(produto)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Produto cadastrado", null));
+	}
     }
 
     public void alterarAction() {
-	model.alterar(produto);
+	if (model.alterar(produto)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Produto alterado", null));
+	}
     }
 
     public void deletarAction() {
-	model.deletar(produto);
+	if (model.deletar(produto)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Produto deletado", null));
+	}
     }
 
     public void deletarAction(Produto produto) {
-	model.deletar(produto);
+	if (model.deletar(produto)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Produto deletado", null));
+	}
     }
 
     public Produto buscarAction(int id) {

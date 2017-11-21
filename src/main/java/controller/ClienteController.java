@@ -6,8 +6,10 @@
 package controller;
 
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.ClienteModel;
 import model.entidades.Cliente;
 
@@ -30,19 +32,27 @@ public class ClienteController {
     }
 
     public void inserirAction() {
-	model.inserir(cliente);
+	if (model.inserir(cliente)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente cadastrado", null));
+	}
     }
 
     public void alterarAction() {
-	model.alterar(cliente);
+	if (model.alterar(cliente)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente alterado", null));
+	}
     }
 
     public void deletarAction() {
-	model.deletar(cliente);
+	if (model.deletar(cliente)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente deletado", null));
+	}
     }
 
     public void deletarAction(Cliente cliente) {
-	model.deletar(cliente);
+	if (model.deletar(cliente)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente deletado", null));
+	}
     }
 
     public Cliente buscarAction(int id) {

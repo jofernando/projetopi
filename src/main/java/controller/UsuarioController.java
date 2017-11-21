@@ -6,8 +6,10 @@
 package controller;
 
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.UsuarioModel;
 import model.entidades.Usuario;
 
@@ -30,15 +32,24 @@ public class UsuarioController {
     }
 
     public void inserirAction() {
-	model.inserir(usuario);
+	if (model.inserir(usuario)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário cadastrado", null));
+	}
+	/*else {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não cadastrado", null));
+	}*/
     }
 
     public void alterarAction() {
-	model.alterar(usuario);
+	if (model.alterar(usuario)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário alterado", null));
+	}
     }
 
     public void deletarAction() {
-	model.deletar(usuario);
+	if (model.deletar(usuario)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário deletado", null));
+	}
     }
 
     public Usuario buscarAction(int id) {
@@ -50,7 +61,9 @@ public class UsuarioController {
     }
 
     public void loginAction() {
-	model.login(usuario.getUsername(), usuario.getPassword());
+	if (model.login(usuario.getUsername(), usuario.getPassword())) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário logado", null));
+	}
     }
 
     public void logoutAction() {

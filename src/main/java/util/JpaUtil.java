@@ -29,7 +29,7 @@ public class JpaUtil {
 
     public static EntityManagerFactory getEntityManagerFactory() {
 	if (factory == null) {
-	    factory = Persistence.createEntityManagerFactory("PersitenceUnited");
+	    factory = Persistence.createEntityManagerFactory("PersistenceUnited");
 	}
 	return factory;
     }

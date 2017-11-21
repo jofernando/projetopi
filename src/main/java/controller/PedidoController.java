@@ -8,8 +8,10 @@ package controller;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import model.PedidoModel;
 import model.entidades.ItemPedido;
 import model.entidades.Pedido;
@@ -35,19 +37,27 @@ public class PedidoController {
     }
 
     public void inserirAction() {
-	model.inserir(pedido);
+	if (model.inserir(pedido)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pedido cadastrado", null));
+	}
     }
 
     public void alterarAction() {
-	model.alterar(pedido);
+	if (model.alterar(pedido)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pedido alterado", null));
+	}
     }
 
     public void deletarAction() {
-	model.deletar(pedido);
+	if (model.deletar(pedido)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pedido deletado", null));
+	}
     }
 
     public void deletarAction(Pedido pedido) {
-	model.deletar(pedido);
+	if (model.deletar(pedido)) {
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pedido deletado", null));
+	}
     }
 
     public Pedido buscarAction(int id) {

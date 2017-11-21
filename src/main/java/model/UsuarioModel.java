@@ -80,12 +80,12 @@ public class UsuarioModel {
 	return model.buscarTodos();
     }
 
-    public void login(String username, String password) {
+    public boolean login(String username, String password) {
 	password = CriptografiaUtil.criptografar(password);
 	Usuario usuario = ((UsuarioDAO) model).login(username, password);
 	if (usuario != null) {
 	    SessionUtil.setAttribute("UsuarioLogado", usuario);
-	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso! Usuário logado", null));
+	    return true;
 	} else {
 	    throw new IllegalArgumentException("Usuario e/ou senha inválidos");
 	}
@@ -93,6 +93,6 @@ public class UsuarioModel {
 
     public void logout() {
 	SessionUtil.invalidate();
-	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso! Usuário deslogado", null));
+	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário deslogado", null));
     }
 }

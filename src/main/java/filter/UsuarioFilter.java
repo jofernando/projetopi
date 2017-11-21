@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  * @author Fernando
  */
 @WebFilter(servletNames = {"Faces Servlet"})
-public class ControleDeAcesso implements Filter {
+public class UsuarioFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

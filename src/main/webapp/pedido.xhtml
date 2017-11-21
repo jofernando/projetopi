@@ -61,7 +61,7 @@
 				<p:ajax update="dtIten" listener="#{item.calcularPreco()}"/>
 			    </p:spinner>
 			</p:column>
-			<p:column>#{item.preco}</p:column>
+			<p:column>#{item.calcularPreco()}</p:column>
 			<p:column><p:commandButton value="Deletar" icon="ui-icon-close" actionListener="#{pedidoController.pedido.itens.remove(item)}" update="dtIten"/></p:column>
 		    </p:dataTable>
 		    <br/>
@@ -113,7 +113,7 @@
                             </p:row>
                             <p:row>
                                 <p:column>Preço total</p:column>
-                                <p:column>#{pedidoController.pedido.preco}</p:column>
+                                <p:column>#{pedidoController.pedido.calcularPreco()}</p:column>
                             </p:row>
                             <p:row>
                                 <p:column colspan="2" style="font-weight: bold; text-align: center">Cliente</p:column>
@@ -160,7 +160,7 @@
                                 </p:row>
                                 <p:row>
                                     <p:column>Preço</p:column>
-                                    <p:column>#{item.preco}</p:column>
+                                    <p:column>#{item.calcularPreco()}</p:column>
                                 </p:row>
                             </c:forEach>
                         </p:panelGrid>

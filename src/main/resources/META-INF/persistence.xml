@@ -13,8 +13,6 @@
 	    <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 	    <property name="javax.persistence.jdbc.password" value=""/>
 	    <property name="hibernate.hbm2ddl.auto" value="update"/>
-	    <property name="hibernate.format_sql" value="true"/>
-	    <property name="hibernate.show_sql" value="true"/>
 	</properties>
     </persistence-unit>
     <persistence-unit name="PersistenceUnitedTest" transaction-type="RESOURCE_LOCAL">
