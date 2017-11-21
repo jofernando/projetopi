@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Produto</title>
+    </h:head>
+    <h:body>
+        <ui:include src="menu.xhtml"/>
+        <h:form>
+            <p:growl autoUpdate="true"/>
+            <p:fieldset>
+                <p:toolbarGroup>
+                    <p:commandButton actionListener="#{produtoController.preparaCadastrar()}" value="Cadastrar" update="@form"/>
+                    <p:commandButton actionListener="#{produtoController.preparaBuscar()}" value="Buscar" update="@form"/>
+                </p:toolbarGroup>
+                <p:separator/>
+		<h:panelGroup rendered="#{produtoController.estadoBusca == false}">
+		    <p:panelGrid columns="2">
+			<h:outputText value="Código"/>
+			<p:inputMask value="#{produtoController.produto.codigo}" mask="99999-9"/>
+			<h:outputText value="Nome"/>
+			<p:inputText value="#{produtoController.produto.nome}"/>
+			<h:outputText value="Preço"/>
+			<p:inputText value="#{produtoController.produto.preco}"/>
+		    </p:panelGrid>
+		    <br/>
+                    <p:commandButton actionListener="#{produtoController.preparaSalvar()}" value="Salvar" update="@form"/>
+		</h:panelGroup>
+                <p:dataTable var="produto" value="#{produtoController.buscarTodosAction()}" rendered="#{produtoController.estadoBusca}" emptyMessage="Nenhum produto cadastrado">
+                    <p:column headerText="Codigo" filterBy="#{produto.codigo}">
+                        <h:outputText value="#{produto.codigo}"/>
+                    </p:column>
+                    <p:column headerText="Nome" filterBy="#{produto.nome}">
+                        <h:outputText value="#{produto.nome}"/>
+                    </p:column>
+                    <p:column headerText="Preço" filterBy="#{produto.preco}">
+                        <h:outputText value="#{produto.preco}"/>
+                    </p:column>
+                    <p:column>
+			<center>
+			    <p:menuButton value="Opções">
+				<p:menuitem value="Editar" actionListener="#{produtoController.preparaAlterar(produto)}" icon="ui-icon-pencil" update="@form"/>
+				<p:menuitem value="Deletar" actionListener="#{produtoController.deletarAction(produto)}" icon="ui-icon-close" update="@form"/>
+				<p:menuitem value="Visualizar" actionListener="#{produtoController.setProduto(produto)}" oncomplete="PF('widDialVisualizarProduto').show()" icon="ui-icon-search" update="@form"/>
+			    </p:menuButton>
+			</center>
+                    </p:column>
+                </p:dataTable>
+                <p:dialog header="Informações do produto" widgetVar="widDialVisualizarProduto" closable="true"
+                          draggable="false" modal="true" resizable="false"
+                          showEffect="fade" hideEffect="fade">
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Código"/>
+                        <h:outputText value="#{produtoController.produto.codigo}"/>
+                        <h:outputText value="Nome"/>
+                        <h:outputText value="#{produtoController.produto.nome}"/>
+                        <h:outputText value="Preço"/>
+                        <h:outputText value="#{produtoController.produto.preco}"/>
+                    </p:panelGrid>
+                </p:dialog>
+            </p:fieldset>
+        </h:form>
+    </h:body>
+</html>
+

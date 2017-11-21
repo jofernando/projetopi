@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cliente</title>
+    </h:head>
+    <h:body>
+        <ui:include src="menu.xhtml"/>
+        <h:form>
+            <p:growl autoUpdate="true"/>
+            <p:fieldset>
+                <p:toolbarGroup>
+                    <p:commandButton actionListener="#{clienteController.preparaCadastrar()}" value="Cadastrar" update="@form"/>
+                    <p:commandButton actionListener="#{clienteController.preparaBuscar()}" value="Buscar" update="@form"/>
+                </p:toolbarGroup>
+                <p:separator/>
+		<h:panelGroup rendered="#{clienteController.estadoBusca == false}">
+		    <p:panelGrid columns="2">
+			<h:outputText value="Cpf"/>
+			<p:inputMask value="#{clienteController.cliente.cpf}" mask="999.999.999-99"/>
+			<h:outputText value="Nome"/>
+			<p:inputText value="#{clienteController.cliente.nome}"/>
+			<h:outputText value="Endereço"/>
+			<p:inputText value="#{clienteController.cliente.endereco}"/>
+			<h:outputText value="Email"/>
+			<p:inputText id="txtEmail" value="#{clienteController.cliente.email}"/>
+			<h:outputText value="Telefone"/>
+			<p:inputMask value="#{clienteController.cliente.telefone}" mask="(99)99999-9999"/>
+		    </p:panelGrid>
+		    <br></br>
+                    <p:commandButton actionListener="#{clienteController.preparaSalvar()}" value="Salvar" disabled="#{clienteController.estadoBusca}" update="@form"/>
+		</h:panelGroup>
+                <p:dataTable var="cliente" value="#{clienteController.buscarTodosAction()}" rendered="#{clienteController.estadoBusca}" emptyMessage="Nenhum cliente cadastrado">
+                    <p:column headerText="Cpf" filterBy="#{cliente.cpf}">
+                        <h:outputText value="#{cliente.cpf}"/>
+                    </p:column>
+                    <p:column headerText="Nome" filterBy="#{cliente.nome}">
+                        <h:outputText value="#{cliente.nome}"/>
+                    </p:column>
+                    <p:column>
+                        <p:menuButton value="Opções">
+                            <p:menuitem value="Editar" actionListener="#{clienteController.preparaAlterar(cliente)}" icon="ui-icon-pencil" update="@form"/>
+                            <p:menuitem value="Deletar" actionListener="#{clienteController.deletarAction(cliente)}" icon="ui-icon-close" update="@form"/>
+                            <p:menuitem value="Visualizar" actionListener="#{clienteController.setCliente(cliente)}" oncomplete="PF('widDialVisualizarCliente').show()" icon="ui-icon-search" update="@form"/>
+                        </p:menuButton>
+                    </p:column>
+                </p:dataTable>
+                <p:dialog header="Informações do cliente" widgetVar="widDialVisualizarCliente"
+                          draggable="false" modal="true" resizable="false"
+                          showEffect="fade" hideEffect="fade">
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Cpf"/>
+                        <h:outputText value="#{clienteController.cliente.cpf}"/>
+                        <h:outputText value="Nome"/>
+                        <h:outputText value="#{clienteController.cliente.nome}"/>
+                        <h:outputText value="Endereço"/>
+                        <h:outputText value="#{clienteController.cliente.endereco}"/>
+                        <h:outputText value="Email"/>
+                        <h:outputText value="#{clienteController.cliente.email}"/>
+                        <h:outputText value="Telefone"/>
+                        <h:outputText value="#{clienteController.cliente.telefone}"/>
+                    </p:panelGrid>
+                </p:dialog>
+            </p:fieldset>
+        </h:form>
+    </h:body>
+</html>
+
