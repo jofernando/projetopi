@@ -5,77 +5,50 @@
  */
 package model;
 
+import helper.DbUnitHelper;
 import model.entidades.Cliente;
 import org.junit.After;
-import static org.junit.Assert.assertTrue;
+import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import util.JpaUtil;
 
 /**
  *
- * @author Fernando
+ * @author fernando
  */
 public class ClienteModelTest {
 
-    private ClienteModel model;
+    private static ClienteModel clienteModel;
 
     public ClienteModelTest() {
     }
 
     @Test
-    public void deveInserirCliente() {
-	Cliente cliente = new Cliente(
-		"José",
-		"email@gmail.com",
-		"99999-9999",
-		"Avenida 2",
-		"999.999.999-99");
-	assertTrue(model.inserir(cliente));
+    public void deveBuscar() {
+        Cliente cliente = clienteModel.buscar(1);
+        Assert.assertEquals("José", cliente.getNome());
     }
 
-//    @Test
-//    public void deveBuscarCliente() {
-//	Cliente cliente = new Cliente(
-//		"José",
-//		"email@gmail.com",
-//		"99999-9999",
-//		"Avenida 2",
-//		"999.999.999-99");
-//	cliente.setId(1);
-//	assertEquals(cliente, model.buscar(1));
-//    }
-//
-//    public void deveAlterarCliente() {
-//	Cliente cliente = new Cliente(
-//		"José Alterado",
-//		"emailAlterado@gmail.com",
-//		"99999-9999",
-//		"Avenida 2 Alterada",
-//		"999.999.999-99");
-//	cliente.setId(1);
-//	assertTrue(model.alterar(cliente));
-//    }
-//
-//    public void deveBuscarTodosClientes() {
-//	Cliente cliente = new Cliente(
-//		"José Alterado",
-//		"emailAlterado@gmail.com",
-//		"99999-9999",
-//		"Avenida 2 Alterada",
-//		"999.999.999-99");
-//	cliente.setId(1);
-//	List<Cliente> clientes = Arrays.asList(cliente);
-//	assertEquals(clientes, model.buscarTodos());
-//    }
+    @BeforeClass
+    public static void setUpClass() {
+        clienteModel = new ClienteModel(ClienteModel.BANCODADOS, "PersistenceUnitedTest");
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+        JpaUtil.close();
+    }
+
     @Before
-    public void inicializa() {
-	this.model = new ClienteModel(ClienteModel.BANCODADOS, "PersistenceUnitedTest");
+    public void setUp() {
+        new DbUnitHelper().cleanInsert("/tabelas/Cliente.xml");
     }
 
     @After
-    public void encerra() {
-	JpaUtil.close();
+    public void tearDown() {
     }
 
 }
