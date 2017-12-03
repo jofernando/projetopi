@@ -22,6 +22,7 @@ import util.JpaUtil;
 public class ClienteModelTest {
 
     private static ClienteModel clienteModel;
+    private static DbUnitHelper dbUnitHelper;
 
     public ClienteModelTest() {
     }
@@ -35,6 +36,7 @@ public class ClienteModelTest {
     @BeforeClass
     public static void setUpClass() {
         clienteModel = new ClienteModel(ClienteModel.BANCODADOS, "PersistenceUnitedTest");
+        dbUnitHelper = new DbUnitHelper();
     }
 
     @AfterClass
@@ -44,11 +46,12 @@ public class ClienteModelTest {
 
     @Before
     public void setUp() {
-        new DbUnitHelper().cleanInsert("/tabelas/Cliente.xml");
+        dbUnitHelper.cleanInsert("/tabelas/Cliente.xml");
     }
 
     @After
     public void tearDown() {
+        dbUnitHelper.deleteAll("/tabelas/Cliente.xml");
     }
 
 }
