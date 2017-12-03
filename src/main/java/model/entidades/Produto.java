@@ -17,7 +17,11 @@ import javax.persistence.Id;
 @Entity
 public class Produto implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
     @GeneratedValue
     private int id;
     private String codigo;
