@@ -96,7 +96,7 @@ public class PedidoController {
 	Set<ItemPedido> itens = new HashSet<>();
 	if (produtos != null) {
 	    for (Produto produto : produtos) {
-		itens.add(new ItemPedido(1, produto, pedido));
+		itens.add(new ItemPedido(1, produto));
 	    }
 	}
 	pedido.addItens(itens);
