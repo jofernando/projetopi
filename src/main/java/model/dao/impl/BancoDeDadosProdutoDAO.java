@@ -46,7 +46,7 @@ public class BancoDeDadosProdutoDAO implements ProdutoDAO {
     public boolean estaCadastrado(Produto t) {
 	EntityManager manager = this.emf.createEntityManager();
 	try {
-	    List<Produto> produtos = manager.createQuery("from Produto p where p.codigo = :codigo")
+	    List<Produto> produtos = manager.createQuery("from Produto p where p.codigo = :codigo", Produto.class)
 		    .setParameter("codigo", t.getCodigo())
 		    .getResultList();
 	    if (t.getId() != 0 && produtos.size() == 1 && produtos.get(0).getId() == t.getId()) {
@@ -124,7 +124,7 @@ public class BancoDeDadosProdutoDAO implements ProdutoDAO {
     public List<Produto> buscarTodos() {
 	EntityManager manager = this.emf.createEntityManager();
 	try {
-	    return manager.createQuery("from Produto p").getResultList();
+	    return manager.createQuery("from Produto p", Produto.class).getResultList();
 	} catch (Exception e) {
 	    return null;
 	} finally {

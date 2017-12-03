@@ -47,7 +47,7 @@ public class BancoDeDadosClienteDAO implements ClienteDAO {
     public boolean estaCadastrado(Cliente t) {
 	EntityManager manager = this.emf.createEntityManager();
 	try {
-	    List<Cliente> clientes = manager.createQuery("from Cliente c where c.cpf = :cpf")
+	    List<Cliente> clientes = manager.createQuery("from Cliente c where c.cpf = :cpf", Cliente.class)
 		    .setParameter("cpf", t.getCpf())
 		    .getResultList();
 	    if (t.getId() != 0 && clientes.size() == 1 && clientes.get(0).getId() == (t.getId())) {
@@ -125,7 +125,7 @@ public class BancoDeDadosClienteDAO implements ClienteDAO {
     public List<Cliente> buscarTodos() {
 	EntityManager manager = this.emf.createEntityManager();
 	try {
-	    return manager.createQuery("from Cliente c").getResultList();
+	    return manager.createQuery("from Cliente c", Cliente.class).getResultList();
 	} catch (HibernateException e) {
 	    return null;
 	} finally {

@@ -48,7 +48,7 @@ public class BancoDeDadosUsuarioDAO implements UsuarioDAO {
     public boolean estaCadastrado(Usuario t) {
 	EntityManager manager = this.emf.createEntityManager();
 	try {
-	    List<Usuario> usuarios = manager.createQuery("from Usuario u where u.username = :username")
+	    List<Usuario> usuarios = manager.createQuery("from Usuario u where u.username = :username", Usuario.class)
 		    .setParameter("username", t.getUsername())
 		    .getResultList();
 	    if (t.getId() != 0 && usuarios.size() == 1 && usuarios.get(0).getId() == (t.getId())) {
@@ -123,7 +123,7 @@ public class BancoDeDadosUsuarioDAO implements UsuarioDAO {
     public List<Usuario> buscarTodos() {
 	EntityManager manager = this.emf.createEntityManager();
 	try {
-	    return manager.createQuery("from Usuario u").getResultList();
+	    return manager.createQuery("from Usuario u", Usuario.class).getResultList();
 	} catch (Exception e) {
 	    return null;
 	} finally {

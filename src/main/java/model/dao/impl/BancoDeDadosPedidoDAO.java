@@ -33,7 +33,7 @@ public class BancoDeDadosPedidoDAO implements PedidoDAO {
 	EntityManager manager = this.emf.createEntityManager();
 	try {
 	    List<Pedido> pedidos = manager.createQuery("from Pedido p where p.cliente.id = :cliente_id"
-		    + " and p.campanha = :campanha")
+		    + " and p.campanha = :campanha", Pedido.class)
 		    .setParameter("campanha", t.getCampanha())
 		    .setParameter("cliente_id", t.getCliente().getId())
 		    .getResultList();
@@ -109,7 +109,7 @@ public class BancoDeDadosPedidoDAO implements PedidoDAO {
     public List<Pedido> buscarTodos() {
 	EntityManager manager = this.emf.createEntityManager();
 	try {
-	    return manager.createQuery("from Pedido p").getResultList();
+	    return manager.createQuery("from Pedido p", Pedido.class).getResultList();
 	} catch (Exception e) {
 	    return null;
 	} finally {
