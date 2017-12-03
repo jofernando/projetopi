@@ -6,6 +6,8 @@
 package controller;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -26,87 +28,107 @@ public class ClienteController {
     private boolean estadoBusca;
 
     public ClienteController() {
-	model = new ClienteModel(ClienteModel.BANCODADOS);
-	cliente = new Cliente();
-	estadoBusca = true;
+        model = new ClienteModel(ClienteModel.BANCODADOS);
+        cliente = new Cliente();
+        estadoBusca = true;
     }
 
     public void inserirAction() {
-	if (model.inserir(cliente)) {
-	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente cadastrado", null));
-	}
+        try {
+            if (model.inserir(cliente)) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente cadastrado", null));
+            }
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void alterarAction() {
-	if (model.alterar(cliente)) {
-	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente alterado", null));
-	}
+        try {
+            if (model.alterar(cliente)) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente alterado", null));
+            }
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void deletarAction() {
-	if (model.deletar(cliente)) {
-	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente deletado", null));
-	}
+        try {
+            if (model.deletar(cliente)) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente deletado", null));
+            }
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void deletarAction(Cliente cliente) {
-	if (model.deletar(cliente)) {
-	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente deletado", null));
-	}
+        try {
+            if (model.deletar(cliente)) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente deletado", null));
+            }
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Cliente buscarAction(int id) {
-	return model.buscar(id);
+        return model.buscar(id);
     }
 
     public List<Cliente> buscarTodosAction() {
-	return model.buscarTodos();
+        return model.buscarTodos();
     }
 
     public Cliente buscarPorCpfAction(String cpf) {
-	return model.buscarPorCpf(cpf);
+        return model.buscarPorCpf(cpf);
     }
 
     public Cliente getCliente() {
-	return cliente;
+        return cliente;
     }
 
     public void setCliente(Cliente cliente) {
-	this.cliente = cliente;
+        this.cliente = cliente;
     }
 
     public boolean isEstadoBusca() {
-	return estadoBusca;
+        return estadoBusca;
     }
 
     public void setEstadoBusca(boolean estadoBusca) {
-	this.estadoBusca = estadoBusca;
+        this.estadoBusca = estadoBusca;
     }
 
     public void limpar() {
-	cliente = new Cliente();
+        cliente = new Cliente();
     }
 
     public void preparaBuscar() {
-	limpar();
-	estadoBusca = true;
+        limpar();
+        estadoBusca = true;
     }
 
     public void preparaCadastrar() {
-	limpar();
-	estadoBusca = false;
+        limpar();
+        estadoBusca = false;
     }
 
     public void preparaAlterar(Cliente cliente) {
-	this.cliente = cliente;
-	estadoBusca = false;
+        this.cliente = cliente;
+        estadoBusca = false;
     }
 
     public void preparaSalvar() {
-	if (cliente.getId() == 0) {
-	    inserirAction();
-	} else {
-	    alterarAction();
-	}
+        if (cliente.getId() == 0) {
+            inserirAction();
+        } else {
+            alterarAction();
+        }
     }
 }

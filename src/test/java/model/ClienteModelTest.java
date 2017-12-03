@@ -29,7 +29,7 @@ public class ClienteModelTest {
 
     @Test
     public void deveBuscar() {
-        Cliente cliente = clienteModel.buscar(1);
+        Cliente cliente = clienteModel.buscar(8);
         Assert.assertEquals("José", cliente.getNome());
     }
 
