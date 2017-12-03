@@ -21,78 +21,79 @@ import util.SessionUtil;
  */
 public class UsuarioModel {
 
-    private DAO<Usuario> model = null;
-    public static final int BANCODADOS = 1;
+	private DAO<Usuario> model = null;
+	public static final int BANCODADOS = 1;
 
-    public UsuarioModel(int tipoArmazenamento) {
-	if (tipoArmazenamento == BANCODADOS) {
-	    model = new BancoDeDadosUsuarioDAO();
+	public UsuarioModel(int tipoArmazenamento) {
+		if (tipoArmazenamento == BANCODADOS) {
+			model = new BancoDeDadosUsuarioDAO();
+		}
 	}
-    }
 
-    public UsuarioModel(int tipoArmazenamento, String pu) {
-	if (tipoArmazenamento == BANCODADOS) {
-	    model = new BancoDeDadosUsuarioDAO(pu);
+	public UsuarioModel(int tipoArmazenamento, String pu) {
+		if (tipoArmazenamento == BANCODADOS) {
+			model = new BancoDeDadosUsuarioDAO(pu);
+		}
 	}
-    }
 
-    public boolean inserir(Usuario t) {
-	if (t.getUsername().isEmpty()) {
-	    throw new IllegalArgumentException("Nome do usuário não pode ser nulo");
-	} else if (t.getPassword().isEmpty()) {
-	    throw new IllegalArgumentException("Senha não pode ser nulo");
-	} else if (((UsuarioDAO) model).estaCadastrado(t)) {
-	    throw new IllegalArgumentException("Usuário com esse nome já cadastrado");
-	} else if (t == null) {
-	    throw new IllegalArgumentException("Usuário não pode ser nulo");
+	public boolean inserir(Usuario t) {
+		if (t == null) {
+			throw new IllegalArgumentException("Usuário não pode ser nulo");
+		} else if (t.getPassword().isEmpty()) {
+			throw new IllegalArgumentException("Senha não pode ser nulo");
+		} else if (((UsuarioDAO) model).estaCadastrado(t)) {
+			throw new IllegalArgumentException("Usuário com esse nome já cadastrado");
+		} else if (t.getUsername().isEmpty()) {
+			throw new IllegalArgumentException("Nome do usuário não pode ser nulo");
+		}
+		t.setPassword(CriptografiaUtil.criptografar(t.getPassword()));
+		return model.inserir(t);
+
 	}
-	t.setPassword(CriptografiaUtil.criptografar(t.getPassword()));
-	return model.inserir(t);
 
-    }
-
-    public boolean alterar(Usuario t) {
-	if (t == null) {
-	    throw new IllegalArgumentException("Usuário não pode ser nulo");
-	} else if (t.getUsername().isEmpty()) {
-	    throw new IllegalArgumentException("Nome do usuário não pode ser nulo");
-	} else if (t.getPassword().isEmpty()) {
-	    throw new IllegalArgumentException("Senha não pode ser nula");
-	} else if (((UsuarioDAO) model).estaCadastrado(t)) {
-	    throw new IllegalArgumentException("Usuário com esse nome já cadastrado");
+	public boolean alterar(Usuario t) {
+		if (t == null) {
+			throw new IllegalArgumentException("Usuário não pode ser nulo");
+		} else if (t.getUsername().isEmpty()) {
+			throw new IllegalArgumentException("Nome do usuário não pode ser nulo");
+		} else if (t.getPassword().isEmpty()) {
+			throw new IllegalArgumentException("Senha não pode ser nula");
+		} else if (((UsuarioDAO) model).estaCadastrado(t)) {
+			throw new IllegalArgumentException("Usuário com esse nome já cadastrado");
+		}
+		t.setPassword(CriptografiaUtil.criptografar(t.getPassword()));
+		return model.alterar(t);
 	}
-	t.setPassword(CriptografiaUtil.criptografar(t.getPassword()));
-	return model.alterar(t);
-    }
 
-    public boolean deletar(Usuario t) {
-	if (t == null) {
-	    throw new IllegalArgumentException("Selecione algum usuário para excluir");
+	public boolean deletar(Usuario t) {
+		if (t == null) {
+			throw new IllegalArgumentException("Selecione algum usuário para excluir");
+		}
+		return model.deletar(t);
 	}
-	return model.deletar(t);
-    }
 
-    public Usuario buscar(int id) {
-	return model.buscar(id);
-    }
-
-    public List<Usuario> buscarTodos() {
-	return model.buscarTodos();
-    }
-
-    public boolean login(String username, String password) {
-	password = CriptografiaUtil.criptografar(password);
-	Usuario usuario = ((UsuarioDAO) model).login(username, password);
-	if (usuario != null) {
-	    SessionUtil.setAttribute("UsuarioLogado", usuario);
-	    return true;
-	} else {
-	    throw new IllegalArgumentException("Usuario e/ou senha inválidos");
+	public Usuario buscar(int id) {
+		return model.buscar(id);
 	}
-    }
 
-    public void logout() {
-	SessionUtil.invalidate();
-	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário deslogado", null));
-    }
+	public List<Usuario> buscarTodos() {
+		return model.buscarTodos();
+	}
+
+	public boolean login(String username, String password) {
+		password = CriptografiaUtil.criptografar(password);
+		Usuario usuario = ((UsuarioDAO) model).login(username, password);
+		if (usuario != null) {
+			SessionUtil.setAttribute("UsuarioLogado", usuario);
+			return true;
+		} else {
+			throw new IllegalArgumentException("Usuario e/ou senha inválidos");
+		}
+	}
+
+	public void logout() {
+		SessionUtil.invalidate();
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário deslogado", null));
+	}
 }
