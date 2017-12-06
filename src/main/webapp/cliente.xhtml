@@ -17,22 +17,22 @@
                     <p:commandButton actionListener="#{clienteController.preparaBuscar()}" value="Buscar" update="@form"/>
                 </p:toolbarGroup>
                 <p:separator/>
-		<h:panelGroup rendered="#{clienteController.estadoBusca == false}">
-		    <p:panelGrid columns="2">
-			<h:outputText value="Cpf"/>
-			<p:inputMask value="#{clienteController.cliente.cpf}" mask="999.999.999-99"/>
-			<h:outputText value="Nome"/>
-			<p:inputText value="#{clienteController.cliente.nome}"/>
-			<h:outputText value="Endereço"/>
-			<p:inputText value="#{clienteController.cliente.endereco}"/>
-			<h:outputText value="Email"/>
-			<p:inputText id="txtEmail" value="#{clienteController.cliente.email}"/>
-			<h:outputText value="Telefone"/>
-			<p:inputMask value="#{clienteController.cliente.telefone}" mask="(99)99999-9999"/>
-		    </p:panelGrid>
-		    <br></br>
+                <h:panelGroup rendered="#{clienteController.estadoBusca == false}">
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Cpf"/>
+                        <p:inputMask value="#{clienteController.cliente.cpf}" mask="999.999.999-99"/>
+                        <h:outputText value="Nome"/>
+                        <p:inputText value="#{clienteController.cliente.nome}"/>
+                        <h:outputText value="Endereço"/>
+                        <p:inputText value="#{clienteController.cliente.endereco}"/>
+                        <h:outputText value="Email"/>
+                        <p:inputText id="txtEmail" value="#{clienteController.cliente.email}"/>
+                        <h:outputText value="Telefone"/>
+                        <p:inputMask value="#{clienteController.cliente.telefone}" mask="(99)99999-9999"/>
+                    </p:panelGrid>
+                    <br></br>
                     <p:commandButton actionListener="#{clienteController.preparaSalvar()}" value="Salvar" disabled="#{clienteController.estadoBusca}" update="@form"/>
-		</h:panelGroup>
+                </h:panelGroup>
                 <p:dataTable var="cliente" value="#{clienteController.buscarTodosAction()}" rendered="#{clienteController.estadoBusca}" emptyMessage="Nenhum cliente cadastrado">
                     <p:column headerText="Cpf" filterBy="#{cliente.cpf}">
                         <h:outputText value="#{cliente.cpf}"/>
@@ -41,11 +41,13 @@
                         <h:outputText value="#{cliente.nome}"/>
                     </p:column>
                     <p:column>
-                        <p:menuButton value="Opções">
-                            <p:menuitem value="Editar" actionListener="#{clienteController.preparaAlterar(cliente)}" icon="ui-icon-pencil" update="@form"/>
-                            <p:menuitem value="Deletar" actionListener="#{clienteController.deletarAction(cliente)}" icon="ui-icon-close" update="@form"/>
-                            <p:menuitem value="Visualizar" actionListener="#{clienteController.setCliente(cliente)}" oncomplete="PF('widDialVisualizarCliente').show()" icon="ui-icon-search" update="@form"/>
-                        </p:menuButton>
+                        <center>
+                            <p:menuButton value="Opções">
+                                <p:menuitem value="Editar" actionListener="#{clienteController.preparaAlterar(cliente)}" icon="ui-icon-pencil" update="@form"/>
+                                <p:menuitem value="Deletar" actionListener="#{clienteController.deletarAction(cliente)}" icon="ui-icon-close" update="@form"/>
+                                <p:menuitem value="Visualizar" actionListener="#{clienteController.setCliente(cliente)}" oncomplete="PF('widDialVisualizarCliente').show()" icon="ui-icon-search" update="@form"/>
+                            </p:menuButton>
+                        </center>
                     </p:column>
                 </p:dataTable>
                 <p:dialog header="Informações do cliente" widgetVar="widDialVisualizarCliente"
