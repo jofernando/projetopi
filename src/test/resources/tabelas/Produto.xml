@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<dataset>
+    <Produto
+        id="8"
+        nome="perfume"
+        preco="89.2"
+        codigo="8888-8"
+    />
+    <Produto
+        id="9"
+        nome="loção pós barba"
+        preco="9.4"
+        codigo="9999-9"
+    />
+</dataset>
