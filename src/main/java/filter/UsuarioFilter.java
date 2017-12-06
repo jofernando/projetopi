@@ -32,20 +32,20 @@ public class UsuarioFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-	try {
-	    HttpServletRequest req = (HttpServletRequest) request;
-	    HttpServletResponse res = (HttpServletResponse) response;
-	    HttpSession session = req.getSession();
-	    if ((session.getAttribute("UsuarioLogado") != null)
-		    || (req.getRequestURI().endsWith("login.xhtml"))
-		    || (req.getRequestURI().contains("javax.faces.resource/"))) {
-		chain.doFilter(request, response);
-	    } else {
-		res.sendRedirect("/ProjetoWeb/login.xhtml");
-	    }
-	} catch (Exception ex) {
-	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!" + ex.getMessage(), null));
-	}
+        try {
+            HttpServletRequest req = (HttpServletRequest) request;
+            HttpServletResponse res = (HttpServletResponse) response;
+            HttpSession session = req.getSession();
+            if ((session.getAttribute("UsuarioLogado") != null)
+                    || (req.getRequestURI().endsWith("login.xhtml"))
+                    || (req.getRequestURI().contains("javax.faces.resource/"))) {
+                chain.doFilter(request, response);
+            } else {
+                res.sendRedirect("/projetopi/login.xhtml");
+            }
+        } catch (IOException | ServletException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!" + ex.getMessage(), null));
+        }
     }
 
     @Override
