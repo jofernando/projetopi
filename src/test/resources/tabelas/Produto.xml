@@ -7,14 +7,14 @@ and open the template in the editor.
 <dataset>
     <Produto
         id="8"
-        nome="perfume"
-        preco="89.2"
+        nome="oitava"
+        preco="88.8"
         codigo="8888-8"
     />
     <Produto
         id="9"
-        nome="loção pós barba"
-        preco="9.4"
+        nome="nona"
+        preco="9.9"
         codigo="9999-9"
     />
 </dataset>
