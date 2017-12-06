@@ -8,12 +8,11 @@ package controller;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import model.ClienteModel;
 import model.entidades.Cliente;
+import util.FacesUtil;
 
 /**
  *
@@ -36,10 +35,10 @@ public class ClienteController {
     public void inserirAction() {
         try {
             if (model.inserir(cliente)) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente cadastrado", null));
+                FacesUtil.adicionarMensagemAviso(null, "Cliente cadastrado", null);
             }
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            FacesUtil.adicionarMensagemErro(null, ex.getMessage(), null);
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -47,10 +46,10 @@ public class ClienteController {
     public void alterarAction() {
         try {
             if (model.alterar(cliente)) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente alterado", null));
+                FacesUtil.adicionarMensagemAviso(null, "Cliente alterado", null);
             }
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            FacesUtil.adicionarMensagemErro(null, ex.getMessage(), null);
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -58,10 +57,10 @@ public class ClienteController {
     public void deletarAction() {
         try {
             if (model.deletar(cliente)) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente deletado", null));
+                FacesUtil.adicionarMensagemAviso(null, "Cliente deletado", null);
             }
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            FacesUtil.adicionarMensagemErro(null, ex.getMessage(), null);
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -69,10 +68,10 @@ public class ClienteController {
     public void deletarAction(Cliente cliente) {
         try {
             if (model.deletar(cliente)) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente deletado", null));
+                FacesUtil.adicionarMensagemAviso(null, "Cliente deletado", null);
             }
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+            FacesUtil.adicionarMensagemErro(null, ex.getMessage(), null);
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
