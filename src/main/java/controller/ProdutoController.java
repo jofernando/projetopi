@@ -78,7 +78,6 @@ public class ProdutoController {
     }
 
     public void limpar() {
-        produto = null;
         produto = new Produto();
     }
 
@@ -97,20 +96,12 @@ public class ProdutoController {
     }
 
     public void preparaAlterar(Produto produto) {
-        this.produto = null;
         this.produto = produto;
         alteracao = true;
         busca = false;
         cadastro = false;
     }
 
-//    public void preparaSalvar() {
-//        if (produto.getId() == 0) {
-//            inserirAction();
-//        } else {
-//            alterarAction();
-//        }
-//    }
     public boolean isCadastro() {
         return cadastro;
     }

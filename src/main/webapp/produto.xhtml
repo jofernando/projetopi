@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Produto</title>
     </h:head>
@@ -14,19 +15,28 @@
             <p:fieldset>
                 <p:toolbarGroup>
                     <p:commandButton actionListener="#{produtoController.preparaCadastrar()}"
-                                     value="Cadastrar" update="@form"/>
+                                     value="Cadastrar" process="@this" update="@form">
+                        <p:resetInput target="@form"/>
+                    </p:commandButton>
                     <p:commandButton actionListener="#{produtoController.preparaBuscar()}" value="Buscar"
-                                     update="@form"/>
+                                     process="@this" update="@form">
+                        <p:resetInput target="@form"/>
+                    </p:commandButton>
                 </p:toolbarGroup>
                 <p:separator/>
                 <h:panelGroup id="cadastro" rendered="#{produtoController.cadastro}">
                     <p:panelGrid columns="2">
                         <h:outputText value="Código"/>
-                        <p:inputMask value="#{produtoController.produto.codigo}" mask="99999-9"/>
+                        <p:inputMask value="#{produtoController.produto.codigo}" mask="99999-9"
+                                     required="true" requiredMessage="O campo código é obrigátorio"/>
                         <h:outputText value="Nome"/>
                         <p:inputText value="#{produtoController.produto.nome}"/>
                         <h:outputText value="Preço"/>
-                        <p:inputText value="#{produtoController.produto.preco}"/>
+                        <p:inputText value="#{produtoController.produto.preco}" required="true"
+                                     validatorMessage="Informe um valor entre $0.000001 e $1000.00"
+                                     requiredMessage="O campo preço é obrigátorio">
+                            <f:validateDoubleRange minimum="0.000001" maximum="1000.00"/>
+                        </p:inputText>
                     </p:panelGrid>
                     <br/>
                     <p:commandButton actionListener="#{produtoController.inserirAction()}" value="Salvar"
@@ -35,15 +45,17 @@
                 <h:panelGroup id="alteracao" rendered="#{produtoController.alteracao}">
                     <p:panelGrid columns="2">
                         <h:outputText value="Código"/>
-                        <p:inputMask value="#{produtoController.produto.codigo}" mask="99999-9"/>
+                        <p:inputMask value="#{produtoController.produto.codigo}" mask="99999-9" required="true" requiredMessage="O campo código é obrigátorio"/>
                         <h:outputText value="Nome"/>
                         <p:inputText value="#{produtoController.produto.nome}"/>
                         <h:outputText value="Preço"/>
-                        <p:inputText value="#{produtoController.produto.preco}"/>
+                        <p:inputText value="#{produtoController.produto.preco}" validatorMessage="Informe um valor entre $0 e $1000.00">
+                            <f:validateDoubleRange minimum="0.00" maximum="1000.00"/>
+                        </p:inputText>
                     </p:panelGrid>
                     <br/>
                     <p:commandButton actionListener="#{produtoController.alterarAction()}" value="Alterar"
-                                     update="@form"/>
+                                     update="@form" />
                 </h:panelGroup>
                 <p:dataTable var="produto" value="#{produtoController.buscarTodosAction()}"
                              rendered="#{produtoController.busca}"
@@ -62,7 +74,9 @@
                             <p:menuButton value="Opções">
                                 <p:menuitem value="Editar"
                                             actionListener="#{produtoController.preparaAlterar(produto)}"
-                                            icon="ui-icon-pencil" update="@form" />
+                                            icon="ui-icon-pencil" update="@form" process="@this">
+                                    <p:resetInput target="@form"/>
+                                </p:menuitem>
                                 <p:menuitem value="Deletar"
                                             actionListener="#{produtoController.deletarAction(produto)}"
                                             icon="ui-icon-close" update="@form"/>
