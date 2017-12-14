@@ -52,7 +52,7 @@ public class BancoDeDadosPedidoDAOTest {
         cliente.setId(1);
         Produto produto = new Produto("1111-1", "primeiro", 11.1);
         produto.setId(1);
-        ItemPedido item = new ItemPedido(2, produto);;
+        ItemPedido item = new ItemPedido(2, produto);
         item.setId(1);
         pedido.setCampanha("a1");
         pedido.setCliente(cliente);

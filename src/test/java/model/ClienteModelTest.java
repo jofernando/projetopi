@@ -27,7 +27,32 @@ public class ClienteModelTest {
 //
 //    @BeforeClass
 //    public static void setUpClass() {
+//        clienteModel = new Cl@Test
+//    public void deveBuscar() {
+//        Cliente cliente = clienteModel.buscar(8);
+//        Assert.assertEquals("José", cliente.getNome());
+//    }
+//
+//    @BeforeClass
+//    public static void setUpClass() {
 //        clienteModel = new ClienteModel(ClienteModel.BANCODADOS, "PersistenceUnitedTest");
+//        dbUnitHelper = new DbUnitHelper();
+//    }
+//
+//    @AfterClass
+//    public static void tearDownClass() {
+//        JpaUtil.close();
+//    }
+//
+//    @Before
+//    public void setUp() {
+//        dbUnitHelper.cleanInsert("/tabelas/Cliente.xml");
+//    }
+//
+//    @After
+//    public void tearDown() {
+//        dbUnitHelper.deleteAll("/tabelas/Cliente.xml");
+//    }ienteModel(ClienteModel.BANCODADOS, "PersistenceUnitedTest");
 //        dbUnitHelper = new DbUnitHelper();
 //    }
 //

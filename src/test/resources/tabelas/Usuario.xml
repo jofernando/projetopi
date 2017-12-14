@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<dataset>
+    <Usuario
+        id="1"
+        username="primeiro"
+        password="E8D95A51F3AF4A3B134BF6BB680A213A"
+    />
+    <Usuario
+        id="2"
+        username="segunda"
+        password="5F4DCC3B5AA765D61D8327DEB882CF99"
+    />
+</dataset>

@@ -24,7 +24,7 @@ import javax.persistence.Table;
 public class ItemPedido implements Serializable {
 
     /**
-     * , pedido
+     *
      *
      */
     private static final long serialVersionUID = 1L;

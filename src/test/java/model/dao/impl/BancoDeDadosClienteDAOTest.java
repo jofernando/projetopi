@@ -21,7 +21,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -146,12 +145,6 @@ public class BancoDeDadosClienteDAOTest {
     @Test
     public void deveBuscarTodos() {
         Assert.assertEquals(2, bancoDeDadosClienteDAO.buscarTodos().size());
-    }
-
-    @Ignore
-    public void deveBuscarNenhumTodos() {
-        dbUnitHelper.deleteAll("/tabelas/Cliente.xml");
-        bancoDeDadosClienteDAO.buscarTodos();
     }
 
     @BeforeClass

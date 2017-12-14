@@ -5,13 +5,10 @@
  */
 package controller;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import model.PedidoModel;
-import model.entidades.ItemPedido;
 import model.entidades.Pedido;
 import model.entidades.Produto;
 import util.FacesUtil;
@@ -89,16 +86,6 @@ public class PedidoController {
 
     public void setEstadoBusca(boolean estadoBusca) {
         this.estadoBusca = estadoBusca;
-    }
-
-    public void addItens() {
-        Set<ItemPedido> itens = new HashSet<>();
-        if (produtos != null) {
-            for (Produto produto : produtos) {
-                itens.add(new ItemPedido(1, produto));
-            }
-        }
-        pedido.addItens(itens);
     }
 
     public void limpar() {

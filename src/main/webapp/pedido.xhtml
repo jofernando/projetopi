@@ -19,89 +19,89 @@
                     <p:commandButton actionListener="#{pedidoController.preparaBuscar()}" value="Buscar" update="@form"/>
                 </p:toolbarGroup>
                 <p:separator/>
-		<h:panelGroup rendered="#{pedidoController.estadoBusca == false}">
-		    <p:panelGrid columns="2">
-			<h:outputText value="Campanha"/>
-			<p:inputText value="#{pedidoController.pedido.campanha}"/>
-			<h:outputText value="Cliente"/>
-			<p:selectOneMenu converter="clienteConverter" value="#{pedidoController.pedido.cliente}" filter="true">
-			    <f:selectItems value="#{clienteController.buscarTodosAction()}" var="cliente" itemLabel="#{cliente.cpf} - #{cliente.nome}" itemValue="#{cliente}"/>
-			</p:selectOneMenu>
-			<h:outputText value="Produtos"/>
-			<p:selectCheckboxMenu filter="true" label="Selecione" value="#{pedidoController.produtos}" converter="produtoConverter">
-			    <f:selectItems value="#{produtoController.buscarTodosAction()}"
-					   var="produto" itemValue="#{produto}" itemLabel="#{produto.codigo}"/>
-			    <f:ajax render="dtIten" listener="#{pedidoController.addItens()}" />
-			</p:selectCheckboxMenu>
-		    </p:panelGrid >
-		    <br/>
-		    <p:dataTable id="dtIten" value="#{pedidoController.pedido.itens}" var="item"
-				 emptyMessage="Nenhum item adicionado">
-			<p:columnGroup type="footer">
-			    <p:row>
-				<p:column colspan="5" footerText="Preço total #{pedidoController.pedido.calcularPreco()}"/>
-			    </p:row>
-			</p:columnGroup>
-			<p:columnGroup type="header">
-			    <p:row>
-				<p:column colspan="2" headerText="Produto"/>
-				<p:column rowspan="2" headerText="Quantidade"/>
-				<p:column rowspan="2" headerText="Preço"/>
-				<p:column rowspan="2"/>
-			    </p:row>
-			    <p:row>
-				<p:column headerText="Código"/>
-				<p:column headerText="Nome"/>
-			    </p:row>
-			</p:columnGroup>
-			<p:column>#{item.produto.codigo}</p:column>
-			<p:column>#{item.produto.nome}</p:column>
-			<p:column>
-			    <p:spinner size="10" value="#{item.quantProduto}">
-				<p:ajax update="dtIten" listener="#{item.calcularPreco()}"/>
-			    </p:spinner>
-			</p:column>
-			<p:column>#{item.calcularPreco()}</p:column>
-			<p:column><p:commandButton value="Deletar" icon="ui-icon-close" actionListener="#{pedidoController.pedido.itens.remove(item)}" update="dtIten"/></p:column>
-		    </p:dataTable>
-		    <br/>
+                <h:panelGroup rendered="#{pedidoController.estadoBusca == false}">
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Campanha"/>
+                        <p:inputText value="#{pedidoController.pedido.campanha}"/>
+                        <h:outputText value="Cliente"/>
+                        <p:selectOneMenu converter="clienteConverter" value="#{pedidoController.pedido.cliente}" filter="true">
+                            <f:selectItems value="#{clienteController.buscarTodosAction()}" var="cliente" itemLabel="#{cliente.cpf} - #{cliente.nome}" itemValue="#{cliente}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Produtos"/>
+                        <p:selectCheckboxMenu filter="true" label="Selecione" value="#{pedidoController.produtos}" converter="produtoConverter">
+                            <f:selectItems value="#{produtoController.buscarTodosAction()}"
+                                           var="produto" itemValue="#{produto}" itemLabel="#{produto.codigo}"/>
+                            <f:ajax render="dtIten" listener="#{pedidoController.pedido.addItem(produto, 1)}" />
+                        </p:selectCheckboxMenu>
+                    </p:panelGrid >
+                    <br/>
+                    <p:dataTable id="dtIten" value="#{pedidoController.pedido.itens}" var="item"
+                                 emptyMessage="Nenhum item adicionado">
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="5" footerText="Preço total #{pedidoController.pedido.calcularPreco()}"/>
+                            </p:row>
+                        </p:columnGroup>
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column colspan="2" headerText="Produto"/>
+                                <p:column rowspan="2" headerText="Quantidade"/>
+                                <p:column rowspan="2" headerText="Preço"/>
+                                <p:column rowspan="2"/>
+                            </p:row>
+                            <p:row>
+                                <p:column headerText="Código"/>
+                                <p:column headerText="Nome"/>
+                            </p:row>
+                        </p:columnGroup>
+                        <p:column>#{item.produto.codigo}</p:column>
+                        <p:column>#{item.produto.nome}</p:column>
+                        <p:column>
+                            <p:spinner size="10" value="#{item.quantProduto}">
+                                <p:ajax update="dtIten" listener="#{item.calcularPreco()}"/>
+                            </p:spinner>
+                        </p:column>
+                        <p:column>#{item.calcularPreco()}</p:column>
+                        <p:column><p:commandButton value="Deletar" icon="ui-icon-close" actionListener="#{pedidoController.pedido.itens.remove(item)}" update="dtIten"/></p:column>
+                    </p:dataTable>
+                    <br/>
                     <p:commandButton actionListener="#{pedidoController.preparaSalvar()}" value="Salvar" disabled="#{pedidoController.estadoBusca}" update="@form"/>
-		</h:panelGroup>
-		<h:panelGroup rendered="#{pedidoController.estadoBusca}">
-		    <p:dataTable value="#{pedidoController.buscarTodosAction()}" var="pedido" emptyMessage="Nenhum pedido cadastrado">
-			<p:columnGroup type="header">
-			    <p:row>
-				<p:column rowspan="2" headerText="Campanha" filterBy="#{pedido.campanha}"/>
-				<p:column colspan="2" headerText="Cliente" />
-				<p:column rowspan="2" headerText="Quant de itens" filterBy="#{pedido.itens.size()}"/>
-				<p:column rowspan="2"/>
-			    </p:row>
-			    <p:row>
-				<p:column headerText="Cpf" filterBy="#{pedido.cliente.cpf}"/>
-				<p:column headerText="Nome" filterBy="#{pedido.cliente.nome}"/>
-			    </p:row>
-			</p:columnGroup>
-			<p:column>
-			    <h:outputText value="#{pedido.campanha}" />
-			</p:column>
-			<p:column>
-			    <h:outputText value="#{pedido.cliente.cpf}" />
-			</p:column>
-			<p:column>
-			    <h:outputText value="#{pedido.cliente.nome}" />
-			</p:column>
-			<p:column>
-			    <h:outputText value="#{pedido.itens.size()}" />
-			</p:column>
-			<p:column>
-			    <p:menuButton value="Opções">
-				<p:menuitem value="Editar" actionListener="#{pedidoController.preparaAlterar(pedido)}" icon="ui-icon-pencil" update="@form"/>
-				<p:menuitem value="Deletar" actionListener="#{pedidoController.deletarAction(pedido)}" icon="ui-icon-close" update="@form"/>
-				<p:menuitem value="Visualizar" actionListener="#{pedidoController.setPedido(pedido)}" oncomplete="PF('widDialVisualizarPedido').show()" icon="ui-icon-search" update="@form"/>
-			    </p:menuButton>
-			</p:column>
-		    </p:dataTable>
-		</h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{pedidoController.estadoBusca}">
+                    <p:dataTable value="#{pedidoController.buscarTodosAction()}" var="pedido" emptyMessage="Nenhum pedido cadastrado">
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column rowspan="2" headerText="Campanha" filterBy="#{pedido.campanha}"/>
+                                <p:column colspan="2" headerText="Cliente" />
+                                <p:column rowspan="2" headerText="Quant de itens" filterBy="#{pedido.itens.size()}"/>
+                                <p:column rowspan="2"/>
+                            </p:row>
+                            <p:row>
+                                <p:column headerText="Cpf" filterBy="#{pedido.cliente.cpf}"/>
+                                <p:column headerText="Nome" filterBy="#{pedido.cliente.nome}"/>
+                            </p:row>
+                        </p:columnGroup>
+                        <p:column>
+                            <h:outputText value="#{pedido.campanha}" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{pedido.cliente.cpf}" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{pedido.cliente.nome}" />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{pedido.itens.size()}" />
+                        </p:column>
+                        <p:column>
+                            <p:menuButton value="Opções">
+                                <p:menuitem value="Editar" actionListener="#{pedidoController.preparaAlterar(pedido)}" icon="ui-icon-pencil" update="@form"/>
+                                <p:menuitem value="Deletar" actionListener="#{pedidoController.deletarAction(pedido)}" icon="ui-icon-close" update="@form"/>
+                                <p:menuitem value="Visualizar" actionListener="#{pedidoController.setPedido(pedido)}" oncomplete="PF('widDialVisualizarPedido').show()" icon="ui-icon-search" update="@form"/>
+                            </p:menuButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
                 <p:dialog header="Informações do pedido" widgetVar="widDialVisualizarPedido"
                           draggable="false" modal="true" resizable="false"
                           showEffect="fade" hideEffect="fade">

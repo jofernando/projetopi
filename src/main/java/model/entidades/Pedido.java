@@ -85,20 +85,24 @@ public class Pedido implements Serializable {
         this.itens = itens;
     }
 
-    public void addItens(Set<ItemPedido> itens) {
-        if (this.getItens() == null) {
-            this.setItens(itens);
-        } else {
-            for (ItemPedido iten : itens) {
-                this.getItens().add(iten);
-            }
+    public void addItem(ItemPedido item) {
+        if (this.itens == null) {
+            this.itens = new HashSet<>();
         }
+        this.getItens().add(item);
+    }
+
+    public void addItem(Produto produto, int quantidade) {
+        if (this.itens == null) {
+            this.itens = new HashSet<>();
+        }
+        this.itens.add(new ItemPedido(quantidade, produto));
     }
 
     public double calcularPreco() {
         double preco = 0;
-        if (this.getItens() != null) {
-            for (ItemPedido iten : this.getItens()) {
+        if (this.itens != null) {
+            for (ItemPedido iten : itens) {
                 preco += iten.calcularPreco();
             }
         }
