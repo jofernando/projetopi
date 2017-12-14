@@ -6,6 +6,7 @@
 package model.entidades;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -48,10 +49,16 @@ public class Pedido implements Serializable {
     }
 
     public Pedido() {
+        cliente = new Cliente();
+        itens = new HashSet<>();
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCampanha() {

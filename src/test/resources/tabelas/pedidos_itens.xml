@@ -4,17 +4,14 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+
 <dataset>
-    <Produto
-        id="1"
-        nome="primeiro"
-        preco="11.1"
-        codigo="1111-1"
+    <pedidos_itens
+        pedido_id="1"
+        item_id="1"
     />
-    <Produto
-        id="2"
-        nome="segunda"
-        preco="222.2"
-        codigo="2222-2"
+    <pedidos_itens
+        pedido_id="2"
+        item_id="2"
     />
 </dataset>

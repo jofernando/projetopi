@@ -42,6 +42,10 @@ public class Produto implements Serializable {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getCodigo() {
         return codigo;
     }

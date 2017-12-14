@@ -6,14 +6,6 @@
 package model;
 
 import helper.DbUnitHelper;
-import model.entidades.Cliente;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import util.JpaUtil;
 
 /**
  *
@@ -27,31 +19,30 @@ public class ClienteModelTest {
     public ClienteModelTest() {
     }
 
-    @Test
-    public void deveBuscar() {
-        Cliente cliente = clienteModel.buscar(8);
-        Assert.assertEquals("José", cliente.getNome());
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-        clienteModel = new ClienteModel(ClienteModel.BANCODADOS, "PersistenceUnitedTest");
-        dbUnitHelper = new DbUnitHelper();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-        JpaUtil.close();
-    }
-
-    @Before
-    public void setUp() {
-        dbUnitHelper.cleanInsert("/tabelas/Cliente.xml");
-    }
-
-    @After
-    public void tearDown() {
-        dbUnitHelper.deleteAll("/tabelas/Cliente.xml");
-    }
-
+//    @Test
+//    public void deveBuscar() {
+//        Cliente cliente = clienteModel.buscar(8);
+//        Assert.assertEquals("José", cliente.getNome());
+//    }
+//
+//    @BeforeClass
+//    public static void setUpClass() {
+//        clienteModel = new ClienteModel(ClienteModel.BANCODADOS, "PersistenceUnitedTest");
+//        dbUnitHelper = new DbUnitHelper();
+//    }
+//
+//    @AfterClass
+//    public static void tearDownClass() {
+//        JpaUtil.close();
+//    }
+//
+//    @Before
+//    public void setUp() {
+//        dbUnitHelper.cleanInsert("/tabelas/Cliente.xml");
+//    }
+//
+//    @After
+//    public void tearDown() {
+//        dbUnitHelper.deleteAll("/tabelas/Cliente.xml");
+//    }
 }

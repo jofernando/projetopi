@@ -6,19 +6,19 @@ and open the template in the editor.
 -->
 <dataset>
     <Cliente
-        id="8"
+        id="1"
         nome="José"
         email="jose@gmail.com"
         telefone="(11)11111-1111"
-        endereco="Rua oitava"
-        cpf="888.888.888-88"
+        endereco="Rua primeira"
+        cpf="111.111.111-11"
     />
     <Cliente
-        id="9"
+        id="2"
         nome="Maria"
         email="maria@gmail.com"
         telefone="(22)22222-2222"
-        endereco="Rua nona"
-        cpf="999.999.999-99"
+        endereco="Rua segunda"
+        cpf="222.222.222-22"
     />
 </dataset>
