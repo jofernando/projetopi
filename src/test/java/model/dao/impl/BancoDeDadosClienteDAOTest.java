@@ -38,26 +38,35 @@ public class BancoDeDadosClienteDAOTest {
     private static BancoDeDadosClienteDAO bancoDeDadosClienteDAO;
     private static DbUnitHelper dbUnitHelper;
 
+    public Cliente cliente1() {
+        Cliente cliente = new Cliente("José", "jose@gmail.com", "(11)11111-1111", "Rua primeira", "111.111.111-11");
+        cliente.setId(1);
+        return cliente;
+    }
+
+    public Cliente cliente2() {
+        Cliente cliente = new Cliente("Maria", "maria@gmail.com", "(22)22222-2222", "Rua segunda", "222.222.222-22");
+        cliente.setId(2);
+        return cliente;
+    }
+
+    public Cliente novoCliente() {
+        return new Cliente("Amelia Pond", "pond@gmail.com", "333.333.333-33", "Escócia", "333.333.333-33");
+    }
+
     @Test
     public void deveNaoEstarCadastrado() {
-        Cliente amelia
-                = new Cliente("Amelia Pond", "pond@gmail.com", "333.333.333-33", "Escócia", "333.333.333-33");
-        Assert.assertFalse(bancoDeDadosClienteDAO.estaCadastrado(amelia));
+        Assert.assertFalse(bancoDeDadosClienteDAO.estaCadastrado(novoCliente()));
     }
 
     @Test
     public void deveEstarCadastrado() {
-        Cliente cliente
-                = new Cliente("José", "jose@gmail.com", "(11)11111-1111", "Rua primeira", "111.111.111-11");
-        Assert.assertTrue(bancoDeDadosClienteDAO.estaCadastrado(cliente));
+        Assert.assertTrue(bancoDeDadosClienteDAO.estaCadastrado(cliente1()));
     }
 
     @Test
     public void deveBuscarPorCpf() {
-        Cliente cliente
-                = new Cliente("José", "jose@gmail.com", "(11)11111-1111", "Rua primeira", "111.111.111-11");
-        cliente.setId(1);
-        Assert.assertEquals(cliente, bancoDeDadosClienteDAO.buscarPorCpf("111.111.111-11"));
+        Assert.assertEquals(cliente1(), bancoDeDadosClienteDAO.buscarPorCpf("111.111.111-11"));
     }
 
     @Test
@@ -67,10 +76,7 @@ public class BancoDeDadosClienteDAOTest {
 
     @Test
     public void deveBuscar() {
-        Cliente cliente
-                = new Cliente("José", "jose@gmail.com", "(11)11111-1111", "Rua primeira", "111.111.111-11");
-        cliente.setId(1);
-        Assert.assertEquals(cliente, bancoDeDadosClienteDAO.buscar(1));
+        Assert.assertEquals(cliente1(), bancoDeDadosClienteDAO.buscar(1));
     }
 
     @Test
@@ -80,8 +86,8 @@ public class BancoDeDadosClienteDAOTest {
 
     @Test
     public void deveInserir() throws DataSetException, SQLException, MalformedURLException, DatabaseUnitException {
-        Cliente jonas = new Cliente("Jonas", "jonas@mail.com", "3109231321", "asdasdas", "123.123.423-93");
-        Assert.assertTrue(bancoDeDadosClienteDAO.inserir(jonas));
+        Cliente amelia = novoCliente();
+        Assert.assertTrue(bancoDeDadosClienteDAO.inserir(amelia));
 
         IDatabaseConnection connection = new DatabaseConnection(ConnectionHelper.getConnection());
         IDataSet databaseDataSet = connection.createDataSet();
@@ -95,19 +101,20 @@ public class BancoDeDadosClienteDAOTest {
         atual.setTelefone((String) actualTable.getValue(2, "telefone"));
         atual.setId((int) actualTable.getValue(2, "id"));
 
-        Assert.assertEquals(jonas.getCpf(), atual.getCpf());
-        Assert.assertEquals(jonas.getNome(), atual.getNome());
-        Assert.assertEquals(jonas.getEndereco(), atual.getEndereco());
-        Assert.assertEquals(jonas.getEmail(), atual.getEmail());
-        Assert.assertEquals(jonas.getTelefone(), atual.getTelefone());
-        Assert.assertEquals(jonas, atual);
+        Assert.assertEquals(amelia.getCpf(), atual.getCpf());
+        Assert.assertEquals(amelia.getNome(), atual.getNome());
+        Assert.assertEquals(amelia.getEndereco(), atual.getEndereco());
+        Assert.assertEquals(amelia.getEmail(), atual.getEmail());
+        Assert.assertEquals(amelia.getTelefone(), atual.getTelefone());
+        Assert.assertEquals(amelia, atual);
     }
 
     @Test
     public void deveAlterar() throws DatabaseUnitException, SQLException {
-        Cliente jonas = new Cliente("JoséAlterado", "joseAlterado@gmail.com", "(11)11111-1111", "Rua primeira-alterado", "111.111.111-11");
-        jonas.setId(1);
-        Assert.assertTrue(bancoDeDadosClienteDAO.alterar(jonas));
+        Cliente jose = cliente1();
+        jose.setEmail("josealterado@gmail.com");
+        jose.setNome("jose alterado");
+        Assert.assertTrue(bancoDeDadosClienteDAO.alterar(jose));
 
         IDatabaseConnection connection = new DatabaseConnection(ConnectionHelper.getConnection());
         IDataSet databaseDataSet = connection.createDataSet();
@@ -121,19 +128,17 @@ public class BancoDeDadosClienteDAOTest {
         atual.setTelefone((String) actualTable.getValue(0, "telefone"));
         atual.setId((int) actualTable.getValue(0, "id"));
 
-        Assert.assertEquals(jonas.getCpf(), atual.getCpf());
-        Assert.assertEquals(jonas.getNome(), atual.getNome());
-        Assert.assertEquals(jonas.getEndereco(), atual.getEndereco());
-        Assert.assertEquals(jonas.getEmail(), atual.getEmail());
-        Assert.assertEquals(jonas.getTelefone(), atual.getTelefone());
-        Assert.assertEquals(jonas, atual);
+        Assert.assertEquals(jose.getCpf(), atual.getCpf());
+        Assert.assertEquals(jose.getNome(), atual.getNome());
+        Assert.assertEquals(jose.getEndereco(), atual.getEndereco());
+        Assert.assertEquals(jose.getEmail(), atual.getEmail());
+        Assert.assertEquals(jose.getTelefone(), atual.getTelefone());
+        Assert.assertEquals(jose, atual);
     }
 
     @Test
     public void deveDeletar() throws DataSetException, DatabaseUnitException, SQLException {
-        Cliente jose = new Cliente("José", "jose@gmail.com", "(11)11111-1111", "Rua primeira", "111.111.111-11");
-        jose.setId(1);
-        Assert.assertTrue(bancoDeDadosClienteDAO.deletar(jose));
+        Assert.assertTrue(bancoDeDadosClienteDAO.deletar(cliente1()));
 
         IDatabaseConnection connection = new DatabaseConnection(ConnectionHelper.getConnection());
         IDataSet databaseDataSet = connection.createDataSet();

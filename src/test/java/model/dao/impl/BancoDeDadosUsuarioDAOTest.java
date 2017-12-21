@@ -84,7 +84,7 @@ public class BancoDeDadosUsuarioDAOTest {
 
     @After
     public void tearDown() {
-//        dbUnitHelper.deleteAll("/tabelas/Usuario.xml");
+        dbUnitHelper.deleteAll("/tabelas/Usuario.xml");
     }
 
 }

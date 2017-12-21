@@ -12,6 +12,7 @@ import model.entidades.Cliente;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -49,6 +50,16 @@ public class ClienteConverterTest {
     @Test
     public void deveFazerConversaoParaString() {
         assertEquals("1", new ClienteConverter().getAsString(null, null, cliente1()));
+    }
+
+    @Test
+    public void deveFazerConversaoParaStringNula() {
+        assertNull(new ClienteConverter().getAsString(null, null, null));
+    }
+
+    @Test
+    public void deveFazerConversaoParaObjetoNulo() {
+        assertNull(new ClienteConverter().getAsObject(null, null, "0"));
     }
 
     @BeforeClass
