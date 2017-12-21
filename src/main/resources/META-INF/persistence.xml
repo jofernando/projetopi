@@ -8,7 +8,7 @@
         <class>model.entidades.Produto</class>
         <class>model.entidades.Usuario</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projeto_web"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projetopi"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.password" value="root"/>
@@ -23,7 +23,7 @@
         <class>model.entidades.Produto</class>
         <class>model.entidades.Usuario</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projeto_web_test"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projetopi_test"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.password" value="root"/>
