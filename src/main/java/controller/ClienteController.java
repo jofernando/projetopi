@@ -24,12 +24,14 @@ public class ClienteController {
 
     private ClienteModel model = null;
     private Cliente cliente;
-    private boolean estadoBusca;
+    private boolean busca;
+    private boolean cadastro;
+    private boolean alteracao;
 
     public ClienteController() {
         model = new ClienteModel(ClienteModel.BANCODADOS);
         cliente = new Cliente();
-        estadoBusca = true;
+        busca = true;
     }
 
     public void inserirAction() {
@@ -88,46 +90,60 @@ public class ClienteController {
         return model.buscarPorCpf(cpf);
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public boolean isEstadoBusca() {
-        return estadoBusca;
-    }
-
-    public void setEstadoBusca(boolean estadoBusca) {
-        this.estadoBusca = estadoBusca;
-    }
-
     public void limpar() {
         cliente = new Cliente();
     }
 
     public void preparaBuscar() {
         limpar();
-        estadoBusca = true;
+        busca = true;
+        cadastro = false;
+        alteracao = false;
     }
 
     public void preparaCadastrar() {
         limpar();
-        estadoBusca = false;
+        busca = false;
+        cadastro = true;
+        alteracao = false;
     }
 
     public void preparaAlterar(Cliente cliente) {
         this.cliente = cliente;
-        estadoBusca = false;
+        busca = false;
+        cadastro = false;
+        alteracao = true;
     }
 
-    public void preparaSalvar() {
-        if (cliente.getId() == 0) {
-            inserirAction();
-        } else {
-            alterarAction();
-        }
+    public boolean isBusca() {
+        return busca;
+    }
+
+    public void setBusca(boolean busca) {
+        this.busca = busca;
+    }
+
+    public boolean isCadastro() {
+        return cadastro;
+    }
+
+    public void setCadastro(boolean cadastro) {
+        this.cadastro = cadastro;
+    }
+
+    public boolean isAlteracao() {
+        return alteracao;
+    }
+
+    public void setAlteracao(boolean alteracao) {
+        this.alteracao = alteracao;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

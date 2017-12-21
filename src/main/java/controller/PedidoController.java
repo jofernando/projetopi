@@ -5,10 +5,12 @@
  */
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import model.PedidoModel;
+import model.entidades.ItemPedido;
 import model.entidades.Pedido;
 import model.entidades.Produto;
 import util.FacesUtil;
@@ -24,12 +26,14 @@ public class PedidoController {
     private PedidoModel model = null;
     private Pedido pedido;
     private List<Produto> produtos;
-    private boolean estadoBusca;
+    private boolean busca;
+    private boolean cadastro;
+    private boolean alteracao;
 
     public PedidoController() {
         model = new PedidoModel(PedidoModel.BANCODADOS);
         pedido = new Pedido();
-        estadoBusca = true;
+        busca = true;
     }
 
     public void inserirAction() {
@@ -64,6 +68,36 @@ public class PedidoController {
         return model.buscarTodos();
     }
 
+    public void limpar() {
+        pedido = new Pedido();
+        produtos = new ArrayList<>();
+    }
+
+    public void preparaBuscar() {
+        limpar();
+        busca = true;
+        cadastro = false;
+        alteracao = false;
+    }
+
+    public void preparaCadastrar() {
+        limpar();
+        busca = false;
+        cadastro = true;
+        alteracao = false;
+    }
+
+    public void preparaAlterar(Pedido pedido) {
+        limpar();
+        this.pedido = pedido;
+        for (ItemPedido iten : pedido.getItens()) {
+            produtos.add(iten.getProduto());
+        }
+        busca = false;
+        cadastro = false;
+        alteracao = true;
+    }
+
     public Pedido getPedido() {
         return pedido;
     }
@@ -80,39 +114,35 @@ public class PedidoController {
         this.produtos = produtos;
     }
 
-    public boolean isEstadoBusca() {
-        return estadoBusca;
+    public boolean isBusca() {
+        return busca;
     }
 
-    public void setEstadoBusca(boolean estadoBusca) {
-        this.estadoBusca = estadoBusca;
+    public void setBusca(boolean busca) {
+        this.busca = busca;
     }
 
-    public void limpar() {
-        pedido = new Pedido();
-        produtos = null;
+    public boolean isCadastro() {
+        return cadastro;
     }
 
-    public void preparaBuscar() {
-        limpar();
-        estadoBusca = true;
+    public void setCadastro(boolean cadastro) {
+        this.cadastro = cadastro;
     }
 
-    public void preparaCadastrar() {
-        limpar();
-        estadoBusca = false;
+    public boolean isAlteracao() {
+        return alteracao;
     }
 
-    public void preparaAlterar(Pedido pedido) {
-        this.pedido = pedido;
-        estadoBusca = false;
+    public void setAlteracao(boolean alteracao) {
+        this.alteracao = alteracao;
     }
 
-    public void preparaSalvar() {
-        if (pedido.getId() == 0) {
-            inserirAction();
-        } else {
-            alterarAction();
+    public void atualizarItens() {
+        if (produtos != null) {
+            for (Produto produto : produtos) {
+                pedido.addItem(produto, 1);
+            }
         }
     }
 }

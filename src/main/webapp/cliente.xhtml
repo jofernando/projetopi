@@ -13,27 +13,55 @@
             <p:growl autoUpdate="true"/>
             <p:fieldset>
                 <p:toolbarGroup>
-                    <p:commandButton actionListener="#{clienteController.preparaCadastrar()}" value="Cadastrar" update="@form"/>
-                    <p:commandButton actionListener="#{clienteController.preparaBuscar()}" value="Buscar" update="@form"/>
+                    <p:commandButton actionListener="#{clienteController.preparaCadastrar()}"
+                                     value="Novo" update="@form" process="@this">
+                        <p:resetInput target="@form"/>
+                    </p:commandButton>
+                    <p:commandButton actionListener="#{clienteController.preparaBuscar()}"
+                                     value="Listar" update="@form" process="@this">
+                        <p:resetInput target="@form"/>
+                    </p:commandButton>
                 </p:toolbarGroup>
-                <p:separator/>
-                <h:panelGroup rendered="#{clienteController.estadoBusca == false}">
-                    <p:panelGrid columns="2">
-                        <h:outputText value="Cpf"/>
-                        <p:inputMask value="#{clienteController.cliente.cpf}" mask="999.999.999-99"/>
-                        <h:outputText value="Nome"/>
-                        <p:inputText value="#{clienteController.cliente.nome}"/>
-                        <h:outputText value="Endereço"/>
-                        <p:inputText value="#{clienteController.cliente.endereco}"/>
-                        <h:outputText value="Email"/>
-                        <p:inputText id="txtEmail" value="#{clienteController.cliente.email}"/>
-                        <h:outputText value="Telefone"/>
-                        <p:inputMask value="#{clienteController.cliente.telefone}" mask="(99)99999-9999"/>
-                    </p:panelGrid>
-                    <br></br>
-                    <p:commandButton actionListener="#{clienteController.preparaSalvar()}" value="Salvar" disabled="#{clienteController.estadoBusca}" update="@form"/>
-                </h:panelGroup>
-                <p:dataTable var="cliente" value="#{clienteController.buscarTodosAction()}" rendered="#{clienteController.estadoBusca}" emptyMessage="Nenhum cliente cadastrado">
+            </p:fieldset>
+            <p:fieldset legend="Cadastro de cliente" rendered="#{clienteController.cadastro}">
+                <p:panelGrid columns="2">
+                    <h:outputText value="Cpf"/>
+                    <p:inputMask value="#{clienteController.cliente.cpf}" mask="999.999.999-99"
+                                 required="true" requiredMessage="O campo CPF é obrigátorio"/>
+                    <h:outputText value="Nome"/>
+                    <p:inputText value="#{clienteController.cliente.nome}"/>
+                    <h:outputText value="Endereço"/>
+                    <p:inputText value="#{clienteController.cliente.endereco}"/>
+                    <h:outputText value="Email"/>
+                    <p:inputText value="#{clienteController.cliente.email}"/>
+                    <h:outputText value="Telefone"/>
+                    <p:inputMask value="#{clienteController.cliente.telefone}" mask="(99)99999-9999"/>
+                </p:panelGrid>
+                <br></br>
+                <p:commandButton actionListener="#{clienteController.inserirAction()}" value="Salvar"
+                                 update="@form"/>
+            </p:fieldset>
+            <p:fieldset legend="Alteração do cliente" rendered="#{clienteController.alteracao}">
+                <p:panelGrid columns="2">
+                    <h:outputText value="Cpf"/>
+                    <p:inputMask value="#{clienteController.cliente.cpf}" mask="999.999.999-99"
+                                 required="true" requiredMessage="O campo CPF é obrigátorio"/>
+                    <h:outputText value="Nome"/>
+                    <p:inputText value="#{clienteController.cliente.nome}"/>
+                    <h:outputText value="Endereço"/>
+                    <p:inputText value="#{clienteController.cliente.endereco}"/>
+                    <h:outputText value="Email"/>
+                    <p:inputText value="#{clienteController.cliente.email}"/>
+                    <h:outputText value="Telefone"/>
+                    <p:inputMask value="#{clienteController.cliente.telefone}" mask="(99)99999-9999"/>
+                </p:panelGrid>
+                <br></br>
+                <p:commandButton actionListener="#{clienteController.alterarAction()}" value="Alterar"
+                                 update="@form"/>
+            </p:fieldset>
+            <p:fieldset legend="Listagems dos clientes" rendered="#{clienteController.busca}">
+                <p:dataTable var="cliente" value="#{clienteController.buscarTodosAction()}"
+                             emptyMessage="Nenhum cliente cadastrado">
                     <p:column headerText="Cpf" filterBy="#{cliente.cpf}">
                         <h:outputText value="#{cliente.cpf}"/>
                     </p:column>
@@ -43,9 +71,16 @@
                     <p:column>
                         <center>
                             <p:menuButton value="Opções">
-                                <p:menuitem value="Editar" actionListener="#{clienteController.preparaAlterar(cliente)}" icon="ui-icon-pencil" update="@form"/>
-                                <p:menuitem value="Deletar" actionListener="#{clienteController.deletarAction(cliente)}" icon="ui-icon-close" update="@form"/>
-                                <p:menuitem value="Visualizar" actionListener="#{clienteController.setCliente(cliente)}" oncomplete="PF('widDialVisualizarCliente').show()" icon="ui-icon-search" update="@form"/>
+                                <p:menuitem value="Editar" icon="ui-icon-pencil" update="@form"
+                                            actionListener="#{clienteController.preparaAlterar(cliente)}"
+                                            process="@this">
+                                    <p:resetInput target="@form"/>
+                                </p:menuitem>
+                                <p:menuitem value="Deletar" icon="ui-icon-close" update="@form"
+                                            actionListener="#{clienteController.deletarAction(cliente)}"/>
+                                <p:menuitem value="Visualizar"  icon="ui-icon-search" update="@form"
+                                            oncomplete="PF('widDialVisualizarCliente').show()"
+                                            actionListener="#{clienteController.setCliente(cliente)}"/>
                             </p:menuButton>
                         </center>
                     </p:column>
